@@ -6,18 +6,15 @@ from tkinter import *
 def abrir_segunda_ventana():
     root.withdraw()
     segunda_ventana = Toplevel(root)
-    frame2=Frame(segunda_ventana, width=720, height=360)
-    frame2.pack(fill="both")
+    frame2=Frame(segunda_ventana)
+    frame2.pack(fill="both",expand=True)
     frame2.config(bg="lightblue",relief="groove",bd="5")
     patt.NumPattern(segunda_ventana,frame2,root)
 
 def abrir_tercera_ventana():
     root.withdraw()
     segunda_ventana = Toplevel(root)
-    frame2=Frame(segunda_ventana, width=720, height=360)
-    frame2.pack(fill="both")
-    frame2.config(bg="lightblue",relief="groove",bd="5")
-    ct.ColorTiles(segunda_ventana,frame2,root)
+    ct.ColorTiles(segunda_ventana,root)
 
 def ver_puntajes():
     root.withdraw()
@@ -32,14 +29,22 @@ def quit_game():
 
 root = Tk()
 root.title("Memory Tiles")
-root.geometry("720x360")
+root.geometry("725x365")
 
-frame=Frame(root, width=720, height=360)
-frame.pack(fill="both")
-frame.config(bg="lightblue",relief="groove",bd="5")
+background_image = PhotoImage(file=r"C:\Users\Gokus\OneDrive\Escritorio\cognitive-games\bg.png")
 
-label = Label(frame, text="Esta es la ventana principal")
-label.grid(column=0,row=0,padx=10,pady=10)
+frame=Frame(root)
+frame.pack(fill="both",expand=True)
+frame.config(bg="black")
+
+# Crear una etiqueta en el Frame para mostrar la imagen
+etiqueta = Label(frame, image=background_image)
+etiqueta.image = background_image  # Evitar que la imagen sea eliminada por la recolección de basura
+etiqueta.grid(row=0, column=0, rowspan=5, columnspan=5, sticky="nsew")
+
+
+label = Label(frame, text="Memory Games")
+label.grid(column=0,row=0,padx=10,pady=10,columnspan=2)
 
 boton = Button(frame, text="Number Patterns", command=abrir_segunda_ventana)
 boton.grid(column=0,row=1,padx=10,pady=10)
@@ -48,9 +53,9 @@ boton2 = Button(frame, text="Color Tiles", command=abrir_tercera_ventana)
 boton2.grid(column=1,row=1,padx=10,pady=10)
 
 ladeboardButton=Button(frame,text="Leaderboards",command=ver_puntajes)
-ladeboardButton.grid(column=0,row=3,padx=10,pady=10)
+ladeboardButton.grid(column=0,row=2,padx=10,pady=10,columnspan=2)
 
 quitButton=Button(frame,text="Quit Game",command=quit_game)
-quitButton.grid(column=0,row=4,padx=10,pady=10)
+quitButton.grid(column=0,row=3,padx=10,pady=10,columnspan=2)
 
 root.mainloop()

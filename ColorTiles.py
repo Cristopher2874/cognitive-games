@@ -3,12 +3,18 @@ import random
 import time
 
 class ColorTiles:
-    def __init__(self, root,frame,root2):
+    def __init__(self, root,root2):
         self.root = root
         self.mainRoot=root2
-        self.frame=frame
+        self.frame=tk.Frame(root)
+        self.frame.pack(fill="both",expand=True)
+        self.frame.config(bg="black")
         self.root.title("Color Tiles")
-        self.root.geometry("400x300")
+        self.root.geometry("725x365")
+        self.background_image = tk.PhotoImage(file=r"C:\Users\Gokus\OneDrive\Escritorio\cognitive-games\bg.png")
+        self.etiqueta = tk.Label(self.frame, image=self.background_image)
+        self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
+        self.etiqueta.grid(row=0, column=0, rowspan=7, columnspan=5, sticky="nsew")
         self.colors = ["red", "blue", "green", "yellow"]
         self.pattern = []
         self.user_input = []
@@ -24,10 +30,10 @@ class ColorTiles:
         self.points=0
         self.pattern_label = tk.Label(self.frame, text="Presiona start cuando\nestés listo", font=("Arial", 24),anchor="center")
         self.pattern_label.grid(column=0,row=0,columnspan=4,pady=10)
-        self.levelLabel=tk.Label(frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
+        self.levelLabel=tk.Label(self.frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
         self.levelLabel.grid(column=0,row=1,pady=10)
-        self.pointsLabel=tk.Label(frame,text="Points: "+str(self.points),font=("Arial", 12))
-        self.pointsLabel.grid(column=1,row=1,pady=10)
+        self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
+        self.pointsLabel.grid(column=3,row=1,pady=10)
         self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
         self.reset_button = tk.Button(self.frame, text="Reset", command=self.reset_game)
