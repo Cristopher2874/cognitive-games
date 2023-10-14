@@ -2,12 +2,18 @@ import tkinter as tk
 import random
 
 class NumPattern:
-    def __init__(self, root,frame,root2):
+    def __init__(self, root,root2):
         self.root = root
         self.mainRoot=root2
-        self.frame=frame
+        self.frame=tk.Frame(root)
+        self.frame.pack(fill="both",expand=True)
+        self.frame.config(bg="black")
         self.root.title("Number Pattern")
-        self.root.geometry("300x550")
+        self.root.geometry("550x515")
+        self.background_image = tk.PhotoImage(file=r"C:\Users\Gokus\OneDrive\Escritorio\cognitive-games\bg.png")
+        self.etiqueta = tk.Label(self.frame, image=self.background_image)
+        self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
+        self.etiqueta.grid(row=0, column=0, rowspan=8, columnspan=5, sticky="nsew")
         self.pattern = []
         self.user_input = []
         self.sequence_length = 3
@@ -20,22 +26,29 @@ class NumPattern:
         self.lvl=0
         self.abs_lvl=1
         self.points=0
-        self.pattern_label = tk.Label(frame, text="Presiona start cuando\nestés listo", font=("Arial", 24))
-        self.pattern_label.grid(column=0,row=0,columnspan=4,pady=10)
-        self.levelLabel=tk.Label(frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
+        self.pattern_label = tk.Label(self.frame, text="Presiona start\ncuando estés listo", font=("Arial", 24))
+        self.pattern_label.grid(column=0,row=0,columnspan=3,pady=10)
+        self.levelLabel=tk.Label(self.frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
         self.levelLabel.grid(column=0,row=1,pady=10)
-        self.pointsLabel=tk.Label(frame,text="Points: "+str(self.points),font=("Arial", 12))
-        self.pointsLabel.grid(column=1,row=1,pady=10)
-        self.start_button = tk.Button(frame, text="Start", command=self.start_game)
+        self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
+        self.pointsLabel.grid(column=2,row=1,pady=10)
+        self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
-        self.reset_button = tk.Button(frame, text="Reset", command=self.reset_game)
+        self.reset_button = tk.Button(self.frame, text="Reset", command=self.reset_game)
         self.reset_button.grid(column=2,row=5,padx=10,pady=10)
         self.boton_cerrar = tk.Button(self.frame, text="Back To Menu", command=self.cerrar_segunda_ventana)
-        self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=4)
+        self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=3)
 
     def cerrar_segunda_ventana(self):
         self.root.destroy()
         self.mainRoot.deiconify()
+
+    def set_points(self):
+        global points
+        points = self.points
+    
+    def get_points():
+        return NumPattern.points
 
     def start_game(self):
         self.start_button.config(state=tk.DISABLED)
@@ -110,6 +123,7 @@ class NumPattern:
                 if self.user_input[i]==self.pattern[i]:
                     self.idx+=1
             else:
+                self.set_points()
                 self.pattern_label.config(text="Game Over")
                 self.reset_button.config(state=tk.NORMAL)
                 self.game_active = False
@@ -133,6 +147,7 @@ class NumPattern:
                 self.points+=25
             self.next_pattern()
         else:
+            self.set_points()
             self.pattern_label.config(text="Game Over")
             self.reset_button.config(state=tk.NORMAL)
             self.game_active = False

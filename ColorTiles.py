@@ -1,8 +1,12 @@
 import tkinter as tk
 import random
 import time
+import data as d
 
 class ColorTiles:
+
+    points=0
+
     def __init__(self, root,root2):
         self.root = root
         self.mainRoot=root2
@@ -44,6 +48,15 @@ class ColorTiles:
     def cerrar_segunda_ventana(self):
         self.root.destroy()
         self.mainRoot.deiconify()
+
+    def set_points(self):
+        global points
+        points = self.points
+        d.userPoints=points
+        print(points)
+    
+    def get_points():
+        return ColorTiles.points
 
     def reset_game(self):
         self.pattern = []
@@ -124,6 +137,7 @@ class ColorTiles:
                 if self.user_input[i]==self.pattern[i]:
                     self.idx+=1
             else:
+                self.set_points()
                 self.pattern_label.config(text="Game Over")
                 self.reset_button.config(state=tk.NORMAL)
                 self.game_active = False
@@ -144,6 +158,7 @@ class ColorTiles:
                 self.points+=25
             self.play_pattern()
         else:
+            self.set_points()
             self.pattern_label.config(text="Game Over")
             self.reset_button.config(state=tk.NORMAL)
             self.game_active = False
