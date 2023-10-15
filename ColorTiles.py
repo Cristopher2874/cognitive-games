@@ -19,7 +19,7 @@ class ColorTiles:
         self.root.title("Color Tiles")
         self.root.geometry("725x365")
         self.root.iconbitmap("res\logo.ico")
-        self.background_image = tk.PhotoImage(file=r"res\bg.png")
+        self.background_image = tk.PhotoImage(file=r"res\bgCT.png")
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
         self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
         self.etiqueta.grid(row=0, column=0, rowspan=7, columnspan=5, sticky="nsew")

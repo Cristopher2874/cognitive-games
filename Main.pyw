@@ -68,7 +68,7 @@ root.title("Memory Tiles")
 root.geometry("725x365")
 root.iconbitmap("res\logo.ico")
 
-background_image = PhotoImage(file=r"res\bg.png")
+background_image = PhotoImage(file=r"res\bgM.png")
 
 frame=Frame(root)
 frame.pack(fill="both",expand=True)

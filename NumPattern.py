@@ -17,9 +17,9 @@ class NumPattern:
         self.frame.pack(fill="both",expand=True)
         self.frame.config(bg="black")
         self.root.title("Number Pattern")
-        self.root.geometry("550x515")
+        self.root.geometry("400x515")
         self.root.iconbitmap("res\logo.ico")
-        self.background_image = tk.PhotoImage(file=r"res\bg.png")
+        self.background_image = tk.PhotoImage(file=r"res\bgNP.png")
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
         self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
         self.etiqueta.grid(row=0, column=0, rowspan=8, columnspan=5, sticky="nsew")
@@ -88,7 +88,8 @@ class NumPattern:
         for i in range(3):
             for i in range(1, 10):
                 button = tk.Button(self.frame, text=str(i), height=5,width=9, command=lambda i=i: self.check_input(i))
-                button.grid(row=((i-1) // 3)+2, column=(i-1) % 3, padx=10, pady=10)
+                button.grid(row=((i-1) // 3)+2, column=(i-1) % 3, padx=30, pady=10)
+                button.config(bg="lightblue")
                 self.number_buttons.append(button)
         self.next_pattern()
     
