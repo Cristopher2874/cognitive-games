@@ -100,7 +100,7 @@ boton2.grid(column=1,row=1,padx=10,pady=10)
 ladeboardButton=Button(frame,text="Leaderboards",command=ver_puntajes)
 ladeboardButton.grid(column=0,row=2,padx=10,pady=10,columnspan=2)
 
-quitButton=Button(frame,text="Quit Game",command=quit_game)
+quitButton=Button(frame,text="Salir",command=quit_game)
 quitButton.grid(column=0,row=3,padx=10,pady=10,columnspan=4)
 
 root.after(500,mostrar_instrucciones)

@@ -152,7 +152,7 @@ class NumPattern:
         self.user_input.append(number)
 
     def correcto(self):
-        self.pattern_label.config(text="¡Correcto!")
+        self.pattern_label.config(text="Correct!")
         self.root.after(1000, self.next_pattern)
     
     def check_user_pattern(self):

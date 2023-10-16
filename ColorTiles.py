@@ -154,7 +154,7 @@ class ColorTiles:
         self.user_input.append(number)
 
     def correcto(self):
-        self.pattern_label.config(text="¡Correcto!")
+        self.pattern_label.config(text="Correct!")
         self.root.after(1000, self.play_pattern)
 
     def check_user_pattern(self):
