@@ -1,54 +1,58 @@
+# cheeck :D
+
+#hacemos los imports necesarios
 import tkinter as tk
 import random
 import time
 from tkinter import messagebox
-
 import pygame
 import data as d
 
-class ColorTiles:
+class ColorTiles: #creamos la clase para los colores
 
-    points=0
+    points=0 #variable para los puntos
 
-    def __init__(self, root,root2):
-        self.root = root
+    def __init__(self, root,root2): #constructor de la clase
+        self.root = root #creamos ambas raíces
         self.mainRoot=root2
-        self.frame=tk.Frame(root)
-        self.frame.pack(fill="both",expand=True)
-        self.frame.config(bg="black")
-        self.root.title("Color Tiles")
-        self.root.geometry("725x365")
-        self.root.iconbitmap("res\logo.ico")
-        self.background_image = tk.PhotoImage(file=r"res\bgCT.png")
+        self.frame=tk.Frame(root) #creamos el frame
+        self.frame.pack(fill="both",expand=True) #lo ponemos en la ventana
+        self.frame.config(bg="black") #fondo negro
+        self.root.title("Color Tiles") #título
+        self.root.geometry("725x365") #tamaño
+        self.root.iconbitmap("res\logo.ico") #logo
+        self.background_image = tk.PhotoImage(file=r"res\bgCT.png") #imagen de fondo
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
-        self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
+        self.etiqueta.image = self.background_image
         self.etiqueta.grid(row=0, column=0, rowspan=7, columnspan=5, sticky="nsew")
-        self.colors = ["red", "blue", "green", "yellow"]
-        self.pattern = []
-        self.user_input = []
-        self.sequence_length = 3
-        self.display_time = 1
-        self.user_time = 7
-        self.game_active = False
-        self.number_buttons = []
-        self.idx=0
-        self.counter=0
-        self.lvl=0
-        self.abs_lvl=1
-        self.points=0
+        self.colors = ["red", "blue", "green", "yellow"] #creamos los colores del patrón
+        self.pattern = [] #lista para el patrón
+        self.user_input = [] #lista para lo que presione el usuario
+        self.sequence_length = 3 #longitud del patrón
+        self.display_time = 1 #tiempo de espera en la pantalla
+        self.user_time = 7 #tiempo que tiene el usuario para repetir el patrón
+        self.game_active = False #variable para saber si el usuario ya perdió
+        self.number_buttons = [] #lista para los botones
+        self.idx=0 #contador
+        self.counter=0 #segundo contador
+        self.lvl=0 #contador del nivel
+        self.abs_lvl=1 #contador del nivel para el usuario
+        self.points=0 #puntos
+        #Se crean los textos para el frame
         self.pattern_label = tk.Label(self.frame, text="Color Tiles", font=("Arial", 24),anchor="center")
         self.pattern_label.grid(column=0,row=0,columnspan=4,pady=10)
         self.levelLabel=tk.Label(self.frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
         self.levelLabel.grid(column=0,row=1,pady=10)
         self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
         self.pointsLabel.grid(column=3,row=1,pady=10)
+        #se crean los botones iniciales
         self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
         self.reset_button = tk.Button(self.frame, text="Reset", command=self.reset_game)
         self.reset_button.grid(column=3,row=5,padx=10,pady=10)
         self.boton_cerrar = tk.Button(self.frame, text="Back To Menu", command=self.cerrar_segunda_ventana)
         self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=4)
-        self.root.after(100,self.mostrar_instrucciones)
+        self.root.after(100,self.mostrar_instrucciones) #luego de 100 milis se muestra la ventana emergente de las instrucciones
 
     def cerrar_segunda_ventana(self):
         self.set_points()
