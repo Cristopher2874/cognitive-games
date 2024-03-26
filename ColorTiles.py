@@ -8,16 +8,12 @@ from tkinter import messagebox
 import pygame
 import data as d
 
-class ColorTiles: #creamos la clase para los colores
+class ColorTiles(d.game_window): #creamos la clase para los colores
 
     points=0 #variable para los puntos
 
     def __init__(self, root,root2): #constructor de la clase
-        self.root = root #creamos ambas raíces
-        self.mainRoot=root2
-        self.frame=tk.Frame(root) #creamos el frame
-        self.frame.pack(fill="both",expand=True) #lo ponemos en la ventana
-        self.frame.config(bg="black") #fondo negro
+        super().__init__(root,root2)
         self.root.title("Color Tiles") #título
         self.root.geometry("725x365") #tamaño
         self.root.iconbitmap("res\logo.ico") #logo
@@ -31,13 +27,10 @@ class ColorTiles: #creamos la clase para los colores
         self.sequence_length = 3 #longitud del patrón
         self.display_time = 1 #tiempo de espera en la pantalla
         self.user_time = 7 #tiempo que tiene el usuario para repetir el patrón
-        self.game_active = False #variable para saber si el usuario ya perdió
         self.number_buttons = [] #lista para los botones
         self.idx=0 #contador
         self.counter=0 #segundo contador
-        self.lvl=0 #contador del nivel
-        self.abs_lvl=1 #contador del nivel para el usuario
-        self.points=0 #puntos
+        
         #Se crean los textos para el frame
         self.pattern_label = tk.Label(self.frame, text="Color Tiles", font=("Arial", 24),anchor="center")
         self.pattern_label.grid(column=0,row=0,columnspan=4,pady=10)
@@ -54,36 +47,9 @@ class ColorTiles: #creamos la clase para los colores
         self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=4)
         self.root.after(100,self.mostrar_instrucciones) #luego de 100 milis se muestra la ventana emergente de las instrucciones
 
-    def cerrar_segunda_ventana(self):
-        self.set_points()
-        pygame.mixer.music.stop()
-        self.play_musicMain()
-        self.root.destroy()
-        self.mainRoot.deiconify()
-
     def mostrar_instrucciones(self):
         instrucciones = "Bienvenido a Color Tiles\n\nInstrucciones:\n\n1. Presiona Start para iniciar el juego\n2. Se mostrará un patrón de colores a memorizar\n3. Al cambiar la instrucción a Your Turn, puedes repetir el patrón usando los botones\n4. ¡Continúa memorizando!"
         messagebox.showinfo("Instrucciones", instrucciones)
-    
-    def play_music(self):
-        pygame.mixer.init()
-        pygame.mixer.music.load("res\innerLoop.mp3")
-        pygame.mixer.music.play(-1)
-    
-    def gameOver(self):
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load("res\GO.mp3")
-        pygame.mixer.music.play(1)
-    
-    def play_musicMain(self):
-        pygame.mixer.init()
-        pygame.mixer.music.load("res\mainLoop.mp3")
-        pygame.mixer.music.play(-1)
-
-    def set_points(self):
-        global points
-        points = self.points
-        d.userPoints=points
 
     def reset_game(self):
         self.play_music()

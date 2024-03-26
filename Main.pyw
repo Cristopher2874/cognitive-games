@@ -7,6 +7,7 @@ import ColorTiles as ct #importamos el archivo del patrón de colores
 import LeaderBoards as lb #importamos el archivo de los puntajes
 import data as d #importamos el archivo que guarda los puntos
 from tkinter import * #importamos la librería tkinter para las ventanas
+import Mole as mo
 
 userList=[] #creamos una lista para gardar el usuario y su puntuación
 leaderList=[] #creamos nuestra matriz para guardar cada usuario y su puntaje
@@ -24,6 +25,12 @@ def abrirColorTiles(): #función para abrir la segunda ventana de color tiles
     root.withdraw() #escondemos la ventana principal
     root2 = Toplevel(root) #creamos una ventana secundaria encima de la principal
     ct.ColorTiles(root2,root) #mandamos llamar la clase de color tiles para abrir las funciones
+
+def abrirMole():
+    pygame.mixer.music.stop() #detenemos la música
+    root.withdraw() #escondemos la ventana principal
+    root2 = Toplevel(root) #creamos una ventana secundaria encima de la principal
+    mo.Mole(root2,root)
 
 def ordenarUsuario(lista): #función para ordenar la lista de usuarios con el mayor puntaje al menor
     #usamos la función de sorted para ordenar la lista que recibimos como argumento
@@ -114,6 +121,9 @@ boton2.grid(column=1,row=1,padx=10,pady=10)
 
 ladeboardButton=Button(frame,text="Leaderboards",command=ver_puntajes)
 ladeboardButton.grid(column=0,row=2,padx=10,pady=10,columnspan=2)
+
+moleButton = Button(frame, text="Mole Smash", command=abrirMole)
+moleButton.grid(column=1,row=2, padx=10, pady=10)
 
 quitButton=Button(frame,text="Salir",command=quit_game)
 quitButton.grid(column=0,row=3,padx=10,pady=10,columnspan=4)

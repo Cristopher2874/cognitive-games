@@ -11,11 +11,7 @@ class NumPattern:
     points=0
 
     def __init__(self, root,root2):
-        self.root = root
-        self.mainRoot=root2
-        self.frame=tk.Frame(root)
-        self.frame.pack(fill="both",expand=True)
-        self.frame.config(bg="black")
+        super().__init__(root,root2)
         self.root.title("Number Pattern")
         self.root.geometry("400x515")
         self.root.iconbitmap("res\logo.ico")
@@ -28,13 +24,9 @@ class NumPattern:
         self.sequence_length = 3
         self.display_time = 7
         self.user_time = 7
-        self.game_active = False
         self.number_buttons = []
         self.idx=0
         self.counter=0
-        self.lvl=0
-        self.abs_lvl=1
-        self.points=0
         self.pattern_label = tk.Label(self.frame, text="Number Patters", font=("Arial", 24))
         self.pattern_label.grid(column=0,row=0,columnspan=3,pady=10)
         self.levelLabel=tk.Label(self.frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
@@ -48,37 +40,10 @@ class NumPattern:
         self.boton_cerrar = tk.Button(self.frame, text="Back To Menu", command=self.cerrar_segunda_ventana)
         self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=3)
         self.root.after(100,self.mostrar_instrucciones)
-
-    def cerrar_segunda_ventana(self):
-        self.set_points()
-        pygame.mixer.music.stop()
-        self.play_musicMain()
-        self.root.destroy()
-        self.mainRoot.deiconify()
     
     def mostrar_instrucciones(self):
         instrucciones = "Bienvenido a Number Patterns\n\nInstrucciones:\n\n1. Presiona Start para iniciar el juego\n2. Se va a mostrar un patrón a memorizar durante un tiempo\n3. Al cambiar la instrucción a Your Turn, puedes repetir el patrón usando los botones\n4. ¡Continúa memorizando!"
         messagebox.showinfo("Instrucciones", instrucciones)
-
-    def play_music(self):
-        pygame.mixer.init()
-        pygame.mixer.music.load("res\innerLoop.mp3")
-        pygame.mixer.music.play(-1)
-
-    def gameOver(self):
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load("res\GO.mp3")
-        pygame.mixer.music.play(1)
-    
-    def play_musicMain(self):
-        pygame.mixer.init()
-        pygame.mixer.music.load("res\mainLoop.mp3")
-        pygame.mixer.music.play(-1)
-
-    def set_points(self):
-        global points
-        points = self.points
-        d.userPoints=points
 
     def start_game(self):
         self.play_music()
