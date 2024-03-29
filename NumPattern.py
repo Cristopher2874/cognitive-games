@@ -1,17 +1,16 @@
-import time
-import tkinter as tk
-import random
 from tkinter import messagebox
+import gameWindow as gw
+import tkinter as tk
+import time
+import random
 
-import pygame
-import data as d
-
-class NumPattern:
+class NumPattern(gw.game_window):
 
     points=0
 
     def __init__(self, root,root2):
         super().__init__(root,root2)
+
         self.root.title("Number Pattern")
         self.root.geometry("400x515")
         self.root.iconbitmap("res\logo.ico")
@@ -19,6 +18,7 @@ class NumPattern:
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
         self.etiqueta.image = self.background_image  # Evitar que la imagen sea eliminada por la recolección de basura
         self.etiqueta.grid(row=0, column=0, rowspan=8, columnspan=5, sticky="nsew")
+
         self.pattern = []
         self.user_input = []
         self.sequence_length = 3
@@ -27,18 +27,21 @@ class NumPattern:
         self.number_buttons = []
         self.idx=0
         self.counter=0
+
         self.pattern_label = tk.Label(self.frame, text="Number Patters", font=("Arial", 24))
         self.pattern_label.grid(column=0,row=0,columnspan=3,pady=10)
         self.levelLabel=tk.Label(self.frame,text=("Level: "+str(self.abs_lvl)),font=("Arial", 12))
         self.levelLabel.grid(column=0,row=1,pady=10)
         self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
         self.pointsLabel.grid(column=2,row=1,pady=10)
+
         self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
         self.reset_button = tk.Button(self.frame, text="Reset", command=self.reset_game)
         self.reset_button.grid(column=2,row=5,padx=10,pady=10)
         self.boton_cerrar = tk.Button(self.frame, text="Back To Menu", command=self.cerrar_segunda_ventana)
         self.boton_cerrar.grid(column=0,row=6,padx=10,pady=10,columnspan=3)
+
         self.root.after(100,self.mostrar_instrucciones)
     
     def mostrar_instrucciones(self):
@@ -47,9 +50,12 @@ class NumPattern:
 
     def start_game(self):
         self.play_music()
+
         self.start_button.config(state=tk.DISABLED)
         self.reset_button.config(state=tk.DISABLED)
+
         self.game_active = True
+
         for i in range(3):
             for i in range(1, 10):
                 button = tk.Button(self.frame, text=str(i), height=5,width=9, command=lambda i=i: self.check_input(i))
@@ -60,6 +66,7 @@ class NumPattern:
     
     def reset_game(self):
         self.play_music()
+
         self.pattern = []
         self.user_input = []
         self.sequence_length = 3
@@ -68,13 +75,18 @@ class NumPattern:
         self.counter=0
         self.abs_lvl=1
         self.points=0
+
         self.levelLabel.config(text=("Level: "+str(self.abs_lvl)))
         self.pointsLabel.config(text="Points: "+str(self.points))
         self.pattern_label.config(text="Number patterns")
+
         self.start_button.config(state=tk.NORMAL)
         self.reset_button.config(state=tk.NORMAL)
+
         self.game_active = False
+
         self.reset_number_buttons()
+
         for button in self.number_buttons:
             button.destroy()
         self.number_buttons = []
@@ -89,8 +101,10 @@ class NumPattern:
         self.pattern = []
         for _ in range(self.sequence_length):
             self.pattern.append(random.randint(1, 9))
+        
         self.pointsLabel.config(text="Points: "+str(self.points))
         self.levelLabel.config(text=("Level: "+str(self.abs_lvl)))
+
         for button in self.number_buttons:
             button.config(state=tk.DISABLED)
         self.display_pattern()

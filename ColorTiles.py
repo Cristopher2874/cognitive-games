@@ -1,19 +1,16 @@
-# cheeck :D
-
-#hacemos los imports necesarios
+from tkinter import messagebox
+import gameWindow as gw
 import tkinter as tk
 import random
 import time
-from tkinter import messagebox
-import pygame
-import data as d
 
-class ColorTiles(d.game_window): #creamos la clase para los colores
+class ColorTiles(gw.game_window): #creamos la clase para los colores
 
     points=0 #variable para los puntos
 
     def __init__(self, root,root2): #constructor de la clase
         super().__init__(root,root2)
+
         self.root.title("Color Tiles") #título
         self.root.geometry("725x365") #tamaño
         self.root.iconbitmap("res\logo.ico") #logo
@@ -21,6 +18,7 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
         self.etiqueta.image = self.background_image
         self.etiqueta.grid(row=0, column=0, rowspan=7, columnspan=5, sticky="nsew")
+
         self.colors = ["red", "blue", "green", "yellow"] #creamos los colores del patrón
         self.pattern = [] #lista para el patrón
         self.user_input = [] #lista para lo que presione el usuario
@@ -38,6 +36,7 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
         self.levelLabel.grid(column=0,row=1,pady=10)
         self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
         self.pointsLabel.grid(column=3,row=1,pady=10)
+
         #se crean los botones iniciales
         self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
@@ -53,6 +52,7 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
 
     def reset_game(self):
         self.play_music()
+
         self.pattern = []
         self.user_input = []
         self.sequence_length = 3
@@ -62,15 +62,21 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
         self.counter=0
         self.abs_lvl=1
         self.points=0
+
         self.levelLabel.config(text=("Level: "+str(self.abs_lvl)))
         self.pointsLabel.config(text="Points: "+str(self.points))
         self.pattern_label.config(text="Color Tiles")
+
         self.start_button.config(state=tk.NORMAL)
         self.reset_button.config(state=tk.NORMAL)
+
         self.game_active = False
+
         self.reset_number_buttons()
+
         for button in self.number_buttons:
             button.destroy()
+
         self.number_buttons = []
     
     def reset_number_buttons(self):
@@ -80,9 +86,11 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
 
     def start_game(self):
         self.play_music()
+
         self.start_button.config(state=tk.DISABLED)
         self.reset_button.config(state=tk.DISABLED)
         self.game_active = True
+
         i=0
         for color in self.colors:
             button = tk.Button(self.frame, text=color, bg=color, height=5,width=9,command=lambda color=color: self.check_input(color))
@@ -97,9 +105,12 @@ class ColorTiles(d.game_window): #creamos la clase para los colores
         self.pattern = [random.choice(self.colors) for _ in range(self.sequence_length)]
         for button in self.number_buttons:
             button.config(state=tk.DISABLED)
+
         self.levelLabel.config(text=("Level: "+str(self.abs_lvl)))
         self.pointsLabel.config(text="Points: "+str(self.points))
+
         self.display_pattern()
+
         self.pattern_label.config(text="Your Turn")
         self.root.after(self.display_time * 1000, self.get_user_input)
 

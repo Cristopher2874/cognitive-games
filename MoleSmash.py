@@ -1,12 +1,12 @@
-#hacemos los imports necesarios
+from tkinter import messagebox
+import gameWindow as gw
 import tkinter as tk
 import random
-from tkinter import messagebox
-import data as d
 
-class Mole(d.game_window):
+class Mole(gw.game_window):
     def __init__(self, root, root2):
         super().__init__(root,root2)
+
         self.root.title("Mole") #título
         self.root.geometry("725x365") #tamaño
         self.root.iconbitmap("res\logo.ico") #logo
@@ -14,6 +14,7 @@ class Mole(d.game_window):
         self.etiqueta = tk.Label(self.frame, image=self.background_image)
         self.etiqueta.image = self.background_image
         self.etiqueta.grid(row=0, column=0, rowspan=7, columnspan=5, sticky="nsew")
+
         #Se crean los textos para el frame
         self.pattern_label = tk.Label(self.frame, text="Mole Smash", font=("Arial", 24),anchor="center")
         self.pattern_label.grid(column=0,row=0,columnspan=4,pady=10)
@@ -21,6 +22,7 @@ class Mole(d.game_window):
         self.levelLabel.grid(column=0,row=1,pady=10)
         self.pointsLabel=tk.Label(self.frame,text="Points: "+str(self.points),font=("Arial", 12))
         self.pointsLabel.grid(column=3,row=1,pady=10)
+
         #se crean los botones iniciales
         self.start_button = tk.Button(self.frame, text="Start", command=self.start_game)
         self.start_button.grid(column=0,row=5,padx=10,pady=10,columnspan=1)
@@ -36,19 +38,24 @@ class Mole(d.game_window):
 
     def reset_game(self):
         self.play_music()
+
         self.abs_lvl=1
         self.points=0
+
         self.levelLabel.config(text=("Level: "+str(self.abs_lvl)))
         self.pointsLabel.config(text="Points: "+str(self.points))
         self.pattern_label.config(text="Color Tiles")
+
         self.start_button.config(state=tk.NORMAL)
         self.reset_button.config(state=tk.NORMAL)
+
         self.game_active = False
 
     def add_points(self, button):
         if button.cget("bg") == "#ff0000":
             self.points += 10
             self.pointsLabel.config(text="Points: "+str(self.points))
+
     def hit_fake(self):
         print("hi")
 
@@ -115,9 +122,12 @@ class Mole(d.game_window):
     # Create a function to start the game
     def start_game(self):
         self.play_music()
+
         self.start_button.config(state=tk.DISABLED)
         self.reset_button.config(state=tk.DISABLED)
+
         self.game_active = True
+
         # Create 3 buttons
         global buttons
         buttons = [tk.Button(self.frame, width=10, height=5, bg="#999999") for _ in range(4)]

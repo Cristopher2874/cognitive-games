@@ -1,36 +1,23 @@
-# cheeck :D
+from tkinter import messagebox
+import NumPattern as patt
+import LeaderBoards as lb
+import ColorTiles as ct
+import gameWindow as gw
+import MoleSmash as mo
+from tkinter import *
+import data as d
+import pygame
 
-from tkinter import messagebox #hacemos import de las ventanas emergentes
-import pygame #importamos pygame para la música
-import NumPattern as patt #importamos el archivo del patrón de números
-import ColorTiles as ct #importamos el archivo del patrón de colores
-import LeaderBoards as lb #importamos el archivo de los puntajes
-import data as d #importamos el archivo que guarda los puntos
-from tkinter import * #importamos la librería tkinter para las ventanas
-import Mole as mo
+userList=[] # list to save the different users
+leaderList=[] # list to store the users and their score
+userName1="" # default variable for the user name
+userPoints=0 # default variable for the user score
 
-userList=[] #creamos una lista para gardar el usuario y su puntuación
-leaderList=[] #creamos nuestra matriz para guardar cada usuario y su puntaje
-userName1="Novato" #creamos una variable que guarda el nombre, por default es novato
-userPoints=0 #variable para guardar los puntos
-
-def abrirNumberPatterns(): #función para abrir la segunda venta de number patterns
-    pygame.mixer.music.stop() #detenemos la música
-    root.withdraw() #escondemos la ventana principal
-    root2 = Toplevel(root) #creamos una ventana secundaria encima de la principal
-    patt.NumPattern(root2,root) #mandamos llamar la clase de number patterns para abrir las funciones
-
-def abrirColorTiles(): #función para abrir la segunda ventana de color tiles
-    pygame.mixer.music.stop() #detenemos la música
-    root.withdraw() #escondemos la ventana principal
-    root2 = Toplevel(root) #creamos una ventana secundaria encima de la principal
-    ct.ColorTiles(root2,root) #mandamos llamar la clase de color tiles para abrir las funciones
-
-def abrirMole():
-    pygame.mixer.music.stop() #detenemos la música
-    root.withdraw() #escondemos la ventana principal
-    root2 = Toplevel(root) #creamos una ventana secundaria encima de la principal
-    mo.Mole(root2,root)
+def callGame(object):
+    pygame.mixer.music.stop() # stop menu music
+    root.withdraw() # hide the main window
+    root2 = Toplevel(root) # create a new window to display the game
+    object(root2,root)
 
 def ordenarUsuario(lista): #función para ordenar la lista de usuarios con el mayor puntaje al menor
     #usamos la función de sorted para ordenar la lista que recibimos como argumento
@@ -62,22 +49,17 @@ def obtener_nombre(): #función para obtener el nombre del tex entry
     global userName1 #usamos la variable del inicio que guarda el usuario
     userName1 = userName.get() #guardamos el valor del text entry en la variable global
 
-def quit_game(): #función para cerrar el juego
-    pygame.mixer.music.stop() #detenemos la música
-    root.quit() #cerramos la ventana principal
-
 def mostrar_instrucciones(): #función para mostrar las instrucciones en el cuadro emergente
     #hacemos una variable para guardar las instrucciones
     instrucciones = "Bienvenido a Memory Tiles\n\nInstrucciones:\n\n1. Para guardar puntaje, escribir nombre y dar click en guardar\n2. Presione Color Tiles o Number Patterns para jugar\n3. Para ver puntaje, haga click sobre Leaderboards"
     #usamos un message box para mostrar las instrucciones
     messagebox.showinfo("Instrucciones", instrucciones)
 
-def play_music(): #función para poner la música
-    pygame.mixer.init() #iniciamos el reproductor de audio
-    pygame.mixer.music.load("res\mainLoop.mp3") #cargamos la canción que vamos a poner
-    pygame.mixer.music.play(-1) #le decimos que repita indefinidamente la canción
+def quit_game(): #función para cerrar el juego
+    pygame.mixer.music.stop() #detenemos la música
+    root.quit() #cerramos la ventana principal
 
-play_music() #en el programa, mandamos llamar la función de música
+gw.game_window.play_musicMain(None)
 
 root = Tk() #creamos la ventana
 root.title("Memory Tiles") #le damos título a la ventana
@@ -113,16 +95,16 @@ userName.grid(column=3,row=1,padx=10,pady=10)
 saveUser = Button(frame,text="Save user", command=obtener_nombre)
 saveUser.grid(row=2,column=2,padx=10,pady=10,columnspan=2)
 
-boton = Button(frame, text="Number Patterns", command=abrirNumberPatterns)
+boton = Button(frame, text="Number Patterns", command=lambda: callGame(patt.NumPattern))
 boton.grid(column=0,row=1,padx=10,pady=10)
 
-boton2 = Button(frame, text="Color Tiles", command=abrirColorTiles)
+boton2 = Button(frame, text="Color Tiles", command=lambda: callGame(ct.ColorTiles))
 boton2.grid(column=1,row=1,padx=10,pady=10)
 
 ladeboardButton=Button(frame,text="Leaderboards",command=ver_puntajes)
 ladeboardButton.grid(column=0,row=2,padx=10,pady=10,columnspan=2)
 
-moleButton = Button(frame, text="Mole Smash", command=abrirMole)
+moleButton = Button(frame, text="Mole Smash", command=lambda: callGame(mo.Mole))
 moleButton.grid(column=1,row=2, padx=10, pady=10)
 
 quitButton=Button(frame,text="Salir",command=quit_game)
